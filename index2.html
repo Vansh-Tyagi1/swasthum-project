@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWASTHUM - AI Health Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chat-container {
+            width: 90%;
+            max-width: 600px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .chat-message {
+            margin: 10px 0;
+            display: flex;
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .chat-message.bot {
+            justify-content: flex-start;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .message.user {
+            background-color: #007bff;
+            color: white;
+            border-bottom-right-radius: 0;
+        }
+
+        .message.bot {
+            background-color: #e5e5e5;
+            color: black;
+            border-bottom-left-radius: 0;
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        #input-field {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #send-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #send-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat-container">
+        <div id="chat-header">SWASTHUM - AI Health Chatbot</div>
+        <div id="chat-body"></div>
+        <div id="chat-input">
+            <input type="text" id="input-field" placeholder="Type your message here...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBody = document.getElementById('chat-body');
+        const inputField = document.getElementById('input-field');
+        const sendBtn = document.getElementById('send-btn');
+
+        const diseases = {
+            "Flu": {
+                symptoms: "Fever, cough, sore throat, runny nose, body aches",
+                precautions: "Stay hydrated, rest, avoid contact with others, wash hands frequently"
+            },
+            "Diabetes": {
+                symptoms: "Increased thirst, frequent urination, fatigue, blurred vision",
+                precautions: "Maintain a balanced diet, exercise regularly, monitor blood sugar levels"
+            },
+            "Hypertension": {
+                symptoms: "Headaches, shortness of breath, nosebleeds",
+                precautions: "Reduce salt intake, exercise regularly, manage stress"
+            },
+
+            "Influenza": {
+                symptoms: "Fever, chills, fatigue, muscle aches",
+                precautions: "Antiviral medications, rest, hydration"
+            },
+            "Migraine": {
+                symptoms: "Severe headache, nausea, sensitivity to light and sound",
+                precautions: "Pain relievers, rest, avoid known triggers"
+            },
+
+
+            "Asthma": {
+                symptoms: "Shortness of breath, wheezing, chest tightness",
+                precautions: "Inhalers, avoiding allergens, prescribed medication"
+            },
+            "Pneumonia": {
+                symptoms: "Cough with phlegm, fever, difficulty breathing",
+                precautions: "Antibiotics (if bacterial), rest, hydration"
+            },
+            "Bronchitis": {
+                symptoms: "Persistent cough, mucus production, fatigue",
+                precautions: "Rest, hydration, cough suppressants"
+            },
+            "Tuberculosis": {
+                symptoms: "Chronic cough, weight loss, fever, night sweats",
+                precautions: "Antibiotic regimen for 6–9 months"
+            },
+            "Anemia": {
+                symptoms: "Fatigue, pale skin, shortness of breath",
+                precautions: "Iron supplements, dietary changes"
+            },
+            "Arthritis": {
+                symptoms: "Joint pain, stiffness, swelling",
+                precautions: "Anti-inflammatory medications, physical therapy"
+            },
+
+            "Epilepsy": {
+                symptoms: "Seizures, temporary confusion, loss of awareness",
+                precautions: "Antiepileptic drugs, surgery, lifestyle modifications"
+            },
+            "Glaucoma": {
+                symptoms: "Eye pain, blurred vision, halos around lights",
+                precautions: "Eye drops, medications, laser or surgery to reduce eye pressure"
+            },
+
+
+            "Osteoporosis": {
+                symptoms: "Bone fractures, loss of height, back pain",
+                precautions: "Calcium and vitamin D supplements, weight-bearing exercise, medications"
+            },
+            "Psoriasis": {
+                symptoms: "Red patches on skin, silvery scales, itching",
+                precautions: "Topical treatments, phototherapy, systemic medications"
+            },
+            "Eczema": {
+                symptoms: "Itchy, inflamed, cracked skin",
+                precautions: "Moisturizers, topical corticosteroids, avoiding irritants"
+            },
+
+
+
+            "Dengue": {
+                symptoms: "High fever, severe headache, joint and muscle pain",
+                precautions: "Supportive care, hydration, pain relievers"
+            },
+            "Malaria": {
+                symptoms: "Fever, chills, sweating, headache",
+                precautions: "Antimalarial drugs, supportive care"
+            },
+            "Measles": {
+                symptoms: "Fever, cough, runny nose, rash",
+                precautions: "Supportive care, vitamin A supplements, vaccination for prevention"
+            },
+            "Mumps": {
+                symptoms: "Swollen salivary glands, fever, headache, muscle aches",
+                precautions: "Supportive care, pain relievers, hydration"
+            },
+            "Rubella": {
+                symptoms: "Fever, rash, swollen lymph nodes",
+                precautions: "Supportive care, rest, hydration"
+            },
+            "Chikungunya": {
+                symptoms: "Fever, joint pain, rash, headache",
+                precautions: "Supportive care, hydration, pain relievers"
+            },
+            "Chickenpox": {
+                symptoms: "Itchy rash, fever, fatigue, loss of appetite",
+                precautions: "Antihistamines, calamine lotion, antiviral medication in severe cases"
+            },
+            "Shingles": {
+                symptoms: "Painful rash, blisters, itching",
+                precautions: "Antiviral medications, pain relievers, soothing lotions"
+            },
+            "Tetanus": {
+                symptoms: "Muscle stiffness, difficulty swallowing, jaw spasms",
+                precautions: "Tetanus immunoglobulin, antibiotics, wound care"
+            },
+
+            "Leprosy": {
+                symptoms: "Skin sores, numbness, muscle weakness",
+                precautions: "Multidrug therapy (MDT), antibiotics like dapsone and rifampicin"
+            },
+            "Scabies": {
+                symptoms: "Intense itching, rash, skin sores",
+                precautions: "Topical scabicides, oral ivermectin in severe cases"
+            },
+            "Ringworm": {
+                symptoms: "Red, itchy, circular rash on the skin",
+                precautions: "Topical antifungal creams, oral antifungal medication"
+            },
+            "Sinusitis": {
+                symptoms: "Nasal congestion, facial pain, headache, fever",
+                precautions: "Decongestants, saline nasal sprays, antibiotics if bacterial"
+            },
+            "Vertigo": {
+                symptoms: "Dizziness, spinning sensation, nausea",
+                precautions: "Vestibular rehabilitation therapy, medications like meclizine"
+            },
+
+            "Covid19": {
+                symptoms: "fever,cough,cold,tiredness",
+                precautions: "wash hands before going out,wear a mask to cover your mouth,avoid going out"
+            },
+
+            "Piles": {
+                symptoms: "bright red blood after your poo,an itchy anus,lumps around your anus ",
+                precautions: "eating healthy diet,staying hyderated,exercising regularly,avoiding straining"
+            },
+
+            "Melasma": {
+                symptoms: "tan or brown patches on your cheeks,nose,forehead,and chin",
+                precautions: "avoid triggers,be gentle with your skin,get regular skin checks"
+            },
+
+            "Razor bumps": {
+                symptoms: "inflamation of hairs follicles caused by shaving",
+                precautions: "shaving tachniques,shaving cream,aftershave"
+            },
+
+            "Scaling": {
+                symptoms: "bleeding gums,swallen gums,receding gums,bad breath",
+                precautions: "eat soft foods,avoid tobacco,avoid eating immediately,brush and floss"
+            },
+
+            "Cracked skin": {
+                symptoms: "itching,dry skin,cracks in the skin,patches of itches or scaly skin",
+                precautions: "use warm water,moisturize,use a gentle cleaner,protec your hands"
+            },
+
+            "Norovirus": {
+                symptoms: "nausea,vomiting,diarhea,fever",
+                precautions: "cook food safely,wash your hands,wash contaminated items,avoid contact with others"
+            },
+
+            "Shigella": {
+                symptoms: "abdominal cramps,fever and diarhea",
+                precautions: "avoid sex,stay home,wash your hands,report concerns"
+            },
+
+            "Pregnancy": {
+                symptoms: "missed periods,nausea and vomiting,breast changes,fatigue,frequent urination",
+                precautions: "eat well,drink fluids,exercise,avoid risky activities,take prental vitamins"
+            },
+
+            "Cancer": {
+                symptoms: "fatigue,hoareness,weight changes,lump,difficulty swallowing",
+                precautions: "eat a healthy diet,maintain a healthy weight,exercise regularly,protect yourself from the sun"
+            },
+
+            "Hair fall": {
+                symptoms: "patchy hair loss,pattern baldness,traction alopecia ",
+                precautions: "be gentle with your hair,protetc your hair from sun,avoid crash diets,get enough rest"
+            },
+
+            "Loose motion": {
+                symptoms: "frequently loose or watery stools,bloating,fever,dehydration,blood or mucus in the stool",
+                precautions: "practice good hygiene,drink safe water,get vaccinated"
+            },
+
+            "Polio": {
+                symptoms: "headache,nausea,slow growth",
+                precautions: "immunization,get vaccinated",
+            },
+
+            "Jaundice": {
+                symptoms: "yellowness in skin and eyes,urine,stools,iteching,",
+                precautions: "avoid alcohol,avoid contaminated food and water, get vaccinated,get regular check-ups"
+            },
+
+            "Typhoid": {
+                symptoms: "headache, chills,loss of appetite,cough,rose spots",
+                precautions: "access to safe water,adequate sanitation,hygiene among food handlers and typhoid vaccination"
+            },
+
+            "Fever": {
+                symptoms: "cough,runny nose,mild fever,diarehea",
+                precautions: "wash your hands,cover your mask,stay home,avoid sharing items"
+            },
+
+            "Cough": {
+                symptoms: "fever,headache,drowsiness,postnasal drip",
+                precautions: "dispose of tissues,wash your hands,stay  home,avoid close contacts",
+            },
+
+            "Kidney stone": {
+                symptoms: "blood in urine,frequent urination,pain in the body,sudden pain in the abdomen",
+                precautions: "drink enough fluids,eat a healthy diet,limit added sugars,be mindful of your weight"
+
+            },
+
+            "High blood pressure": {
+                symptoms: "noose bleeds ,blurred vision,chest pain,shortness of breath",
+                precautions: "take proper sleep,maintain good diet,avoid smoking and alcohol,limit your  sodium intake"
+            },
+
+            "Swine flu": {
+                symptoms: "fever,weakness,loss of appetite,sneezing,coughing,weight loss",
+                precautions: "avoid contact with pigs,wash your hnads,avoid touching your eyes ,nose aur mouth,practice good hygiene"
+            },
+
+            "Psoriasis": {
+                symptoms: "rashes,dyness,fissures,peeling,small bump,thickness or redness",
+                precautions: "void triggers,keeping your skin clean and moist,use a humidifier,protect your skin from sun"
+            }
+        };
+
+
+        function appendMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message', sender);
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('message', sender);
+            messageContent.innerText = message;
+            messageDiv.appendChild(messageContent);
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function processInput(input) {
+            input = input.trim().toLowerCase();
+            if (input === "hello") {
+                appendMessage('bot', "Hello! I'm SWASTHUM, your AI Health Chatbot. How can I assist you today? Just type the name of the diseases you want to konw about.");
+            } else if (diseases[input.charAt(0).toUpperCase() + input.slice(1)]) {
+                const disease = diseases[input.charAt(0).toUpperCase() + input.slice(1)];
+                appendMessage('bot', `Disease: ${input.charAt(0).toUpperCase() + input.slice(1)}\nSymptoms: ${disease.symptoms}\nPrecautions: ${disease.precautions}\n\n "Book your consultation with our specified Doctors" `);
+
+            } else {
+                appendMessage('bot', "I'm sorry, I don't have information on that. Please try asking about another disease or say 'hello'.");
+            }
+        }
+
+        sendBtn.addEventListener('click', () => {
+            const userInput = inputField.value;
+            if (userInput.trim() !== "") {
+                appendMessage('user', userInput);
+                processInput(userInput);
+                inputField.value = "";
+            }
+        });
+
+        inputField.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+
+        // Initial bot message
+        appendMessage('bot', "Hello! I'm SWASTHUM, your AI Health Chatbot. Type 'hello' to begin or ask about diseases.");
+    </script>
+</body>
+
+</html>

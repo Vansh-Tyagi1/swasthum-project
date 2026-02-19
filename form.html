@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWASTHAM - Health Check-Up</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <section class="health-checkup">
+        <div class="form-section">
+            <h2>SWASTHAM</h2>
+<img src="spk.jpg" alt="Play Audio" style="width: 32px; height: 32px; cursor: pointer; margin-left: 10px; vertical-align: middle;" onclick="playSwasthamAudio()">
+<audio id="swasthamAudio">
+    <source src="labtest.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    function playSwasthamAudio() {
+        const audio = document.getElementById('swasthamAudio');
+        audio.play();
+    }
+</script>
+
+            <h2>Book Your Lab Test</h2>
+            <p class="offer-details">Limited Time Offer: Liver Function Test (LFT), Random Blood Sugar, Complete Blood Count, Urine Routine & Microscopy Extended. + Free Report Counseling</p>
+            <form class="health-form">
+                <input type="text" placeholder="Enter Your Mobile No." required>
+                <input type="text" placeholder="Enter Your Name" required>
+                <select required>
+                    <option value="" disabled selected>Select Your City</option>
+                    <option>Delhi</option>
+                    <option>Mumbai</option>
+                    <option>Bangalore</option>
+                    <option>Kolkata</option>
+                    <option>Chennai</option>
+                    <option>Hyderabad</option>
+                    <option>Pune</option>
+                    <option>Ahmedabad</option>
+                    <option>Jaipur</option>
+                    <option>Lucknow</option>
+                </select>
+                <div class="terms">
+                    <input type="checkbox" required>
+                    <span>I hereby affirm and authorize SWASTHAM to process my personal data as per the <a href="#">T&C</a>.</span>
+                </div>
+                <button type="submit">Get a Call Back</button>
+            </form>
+        </div>
+        <div class="image-section">
+            <img src="99.jpg" alt="Doctor Image" class="doctor-image">
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 SWASTHAM. All rights reserved.</p>
+    </footer>
+   <script> document.querySelector('.health-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+    
+        // Get the name input value
+        const nameInput = document.querySelector('.health-form input[placeholder="Enter Your Name"]');
+        const name = nameInput.value;
+    
+        // Display the response message
+        alert(Thank you, ${name}. We will connect with you as soon as possible!);
+    
+        // Clear the form fields
+        document.querySelector('.health-form').reset();
+    });
+</script>
+</body>
+</html>

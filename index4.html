@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+        #upiPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            z-index: 1000;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Payment Options</h2>
+<button class="audio-button" onclick="playPaymentOptionsAudio()" style="margin-left: 10px; vertical-align: middle; background: none; border: none; padding: 0;">
+    <img src="spk.jpg" alt="Play Audio" style="width: 32px; height: 32px; cursor: pointer;">
+</button>
+<audio id="paymentOptionsAudio">
+    <source src="cart.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    function playPaymentOptionsAudio() {
+        const audio = document.getElementById('paymentOptionsAudio');
+        audio.play();
+    }
+</script>
+
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" required readonly>
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod" required>
+                    <option value="">Select</option>
+                    <option value="upi">UPI</option>
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="credit">Credit Card</option>
+                </select>
+            </div>
+            <div class="form-group" id="upiDetails" style="display: none;">
+                <label for="upiId">UPI ID</label>
+                <input type="text" id="upiId">
+            </div>
+            <div class="form-group" id="creditDetails" style="display: none;">
+                <label for="cardNumber">Credit Card Number</label>
+                <input type="text" id="cardNumber">
+                <label for="cvv">CVV</label>
+                <input type="password" id="cvv">
+            </div>
+            <button type="submit" class="button">Pay Now</button>
+        </form>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="upiPopup">
+        <p>UPI Payment Successful!</p>
+        <button class="button" onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        const paymentMethod = document.getElementById("paymentMethod");
+        const upiDetails = document.getElementById("upiDetails");
+        const creditDetails = document.getElementById("creditDetails");
+        const upiPopup = document.getElementById("upiPopup");
+        const overlay = document.getElementById("overlay");
+
+        // Fetch total amount from sessionStorage and set it to the amount field
+        const amountField = document.getElementById("amount");
+        const totalAmount = sessionStorage.getItem('totalAmount');
+        if (totalAmount) {
+            amountField.value = totalAmount;
+        } else {
+            alert("No amount found. Please add items to the cart.");
+        }
+
+        paymentMethod.addEventListener("change", function () {
+            upiDetails.style.display = paymentMethod.value === "upi" ? "block" : "none";
+            creditDetails.style.display = paymentMethod.value === "credit" ? "block" : "none";
+        });
+
+        document.getElementById("paymentForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const amount = document.getElementById("amount").value.trim();
+
+            if (!name || !address || !amount) {
+                alert("Please fill all required fields.");
+                return;
+            }
+
+            if (paymentMethod.value === "upi") {
+                const upiId = document.getElementById("upiId").value.trim();
+                if (!upiId || !upiId.includes("@")) {
+                    alert("Invalid UPI ID.");
+                    return;
+                }
+                showPopup();
+            } else if (paymentMethod.value === "credit") {
+                const cardNumber = document.getElementById("cardNumber").value.trim();
+                const cvv = document.getElementById("cvv").value.trim();
+                if (!cardNumber || cardNumber.length !== 16 || !cvv || cvv.length !== 3) {
+                    alert("Invalid Credit Card details.");
+                    return;
+                }
+                alert("Credit Card Payment Successful!");
+            } else if (paymentMethod.value === "cod") {
+                alert("Order placed with Cash on Delivery.");
+            } else {
+                alert("Please select a payment method.");
+            }
+        });
+
+        function showPopup() {
+            overlay.style.display = "block";
+            upiPopup.style.display = "block";
+        }
+
+        function closePopup() {
+            overlay.style.display = "none";
+            upiPopup.style.display = "none";
+            alert("Order confirmed. Thank you for your payment.");
+        }
+    </script>
+
+</body>
+
+</html>

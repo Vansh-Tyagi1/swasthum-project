@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swastham - Online Doctor Consultation</title>
+  <link rel="stylesheet" href="doctor.css">
+  <style>
+    .audio-button img {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="header-content">
+      <h1>Skip the Travel! Take Online Doctor Consultation</h1>
+      <p>Private consultation | Audio & Video Call | Starting at just ₹199</p>
+      <div class="cta">
+        <a href="consult.html"><button class="btn consult-btn">Consult Now</button></a>
+        <button class="audio-button" onclick="playDoctorAudio()">
+          <img src="spk.jpg" alt="Play Audio">
+        </button>
+        <audio id="doctorAudio">
+          <source src="doctor.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+  </header>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="flowchart">
+      <div class="step">
+        <span class="number">1</span>
+        <p>Select Your Health Concern</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <span class="number">2</span>
+        <p>Fill the Consultation Form</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <span class="number">3</span>
+        <p>Consult Online/Offline as per Your Preference</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialities Section -->
+  <section class="specialities">
+    <h2>25+ Specialities</h2>
+    <p>Consult with top doctors across specialities</p>
+    <button class="audio-button" onclick="playConsultAudio()">
+      <img src="spk.jpg" alt="Play Audio" style="width: 32px; height: 32px; cursor: pointer;">
+    </button>
+    <audio id="consultAudio">
+      <source src="CONSULT.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    
+    <div class="cards">
+      <a href="consult.html">
+        <div class="card">
+          <img src="c1.jpg" alt="Gynecology">
+          <h3>Gynecology</h3>
+        </div>
+      </a>
+      <a href="consult.html">
+        <div class="card">
+          <img src="c3.jpg" alt="Cardiology">
+          <h3>Cardiology</h3>
+        </div>
+      </a>
+      <a href="consult.html">
+        <div class="card">
+          <img src="c4.jpg" alt="Dermatology">
+          <h3>Dermatology</h3>
+        </div>
+      </a>
+      <a href="consult.html">
+        <div class="card">
+          <img src="c0.jpg" alt="Psychiatry">
+          <h3>Psychiatry</h3>
+        </div>
+      </a>
+      <a href="consult.html">
+        <div class="card">
+          <img src="c00.jpg" alt="General Physician">
+          <h3>General Medicine</h3>
+        </div>
+      </a>
+      <a href="consult.html">
+        <div class="card">
+          <img src="c8.jpg" alt="Pediatrics">
+          <h3>Pediatrics</h3>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Common Health Concerns Section -->
+  <section class="health-concerns">
+    <h2>Common Health Concerns</h2>
+    <p>Consult a doctor online for any health issue</p>
+    <div class="cards">
+      <a href="consult.html">
+        <div class="card">
+          <img src="cold.jpg" alt="Cold & Cough">
+          <h3>Cold & Cough</h3>
+        </div>
+      </a>
+      <a href="consult.html">
+        <div class="card">
+          <img src="stomach.jpg" alt="Stomach Pain">
+          <h3>Stomach Pain</h3>
+        </div>
+      </a>
+      <a href="consult.html">
+        <div class="card">
+          <img src="skin.jpg" alt="Skin Allergy">
+          <h3>Skin Allergy</h3>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <h2>What Our Users Say</h2>
+    <div class="cards">
+      <div class="card">
+        <p>"The consultation was smooth and the doctor was very knowledgeable."</p>
+        <h4>- User 1</h4>
+      </div>
+      <div class="card">
+        <p>"Great service! Got my prescription within minutes."</p>
+        <h4>- User 2</h4>
+      </div>
+      <div class="card">
+        <p>"Amazing experience. Highly recommend!"</p>
+        <h4>- User 3</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq">
+    <h2>FAQs</h2>
+    <div class="questions">
+      <div class="question">
+        <h3>What is online doctor consultation?</h3>
+        <p>Online doctor consultation enables patients to connect with doctors over the internet.</p>
+      </div>
+      <div class="question">
+        <h3>How do I start an online consultation?</h3>
+        <p>Start by entering your concern, and our system will connect you with a doctor.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+  </footer>
+
+  <script>
+    function playDoctorAudio() {
+      const audio = document.getElementById('doctorAudio');
+      audio.play();
+    }
+    function playConsultAudio() {
+      const audio = document.getElementById('consultAudio');
+      audio.play();
+    }
+  </script>
+</body>
+</html>

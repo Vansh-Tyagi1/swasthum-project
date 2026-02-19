@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Consultation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Doctor Consultation</h1>
+        <button class="audio-button" onclick="playDoctorConsultationAudio()" style="margin-left: 10px; vertical-align: middle; background: none; border: none; padding: 0;">
+          <img src="spk.jpg" alt="Play Audio" style="width: 32px; height: 32px; cursor: pointer;">
+        </button>
+        <audio id="doctorConsultationAudio">
+          <source src="DOCTORFORM.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        
+        <script>
+          function playDoctorConsultationAudio() {
+            const audio = document.getElementById('doctorConsultationAudio');
+            audio.play();
+          }
+        </script>
+        
+        <form id="consultation-form">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="symptoms">Symptoms:</label>
+            <textarea id="symptoms" name="symptoms" rows="4" required></textarea>
+
+            <!-- Preferred Consultation Mode Dropdown -->
+            <label for="mode">Preferred Consultation Mode:</label>
+            <select id="mode" name="mode" required>
+                <option value="online-video">Online Video</option>
+                <option value="offline">Offline</option>
+                <option value="call">By Call</option>
+            </select>
+
+            <label for="date">Preferred Consultation Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <button type="submit">Request Consultation</button>
+        </form>
+        <div id="response-message"></div>
+    </div>
+
+    <script src="consultant.js"></script>
+</body>
+</html>

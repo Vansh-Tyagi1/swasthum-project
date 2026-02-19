@@ -1,0 +1,206 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  h1, h2, h3 {
+    color: #222;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  section {
+    padding: 2em;
+    text-align: center;
+  }
+  
+  /* Header */
+  .header {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: #fff;
+    padding: 3em 1em;
+  }
+  
+  .header-content h1 {
+    margin-bottom: 0.5em;
+    font-size: 2.5em;
+  }
+  
+  .header-content p {
+    margin-bottom: 1em;
+  }
+  
+  .header-content .consult-btn {
+    background: #ff9800;
+    border: none;
+    padding: 0.8em 1.5em;
+    font-size: 1em;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .header-content .consult-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Specialities and Cards */
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5em;
+    text-align: center;
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Flowchart */
+  .flowchart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+  }
+  
+  .step {
+    text-align: center;
+    background: #e8f0fe;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Footer */
+  footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1.5em;
+  }
+  
+  footer .download-btn {
+    background: #ff5722;
+    border: none;
+    padding: 0.8em 1.5em;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  footer .download-btn:hover {
+    transform: scale(1.1);
+  }
+  /* Section Styling */
+.how-it-works {
+  text-align: center;
+  margin: 50px 0;
+  font-family: Arial, sans-serif;
+}
+
+.how-it-works h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Flowchart Container */
+.flowchart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Step Styling */
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Number Circle */
+.step .number {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover Effects */
+.step:hover {
+  transform: translateY(-5px);
+  background-color: #e0e0e0;
+}
+
+.step:hover .number {
+  background-color: #45a049;
+  transform: scale(1.2);
+}
+
+/* Arrow Styling */
+.arrow {
+  font-size: 2rem;
+  line-height: 1.5;
+  color: #4CAF50;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Effect on Arrow */
+.arrow:hover {
+  transform: translateX(5px);
+}
+
+/* Animation for Fading In */
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}

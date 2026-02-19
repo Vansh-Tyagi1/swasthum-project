@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Planner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="time"] {
+            width: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .medicine-list {
+            margin-top: 20px;
+        }
+
+        .medicine-item {
+            background: #e8f5e9;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .medicine-item span {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Medicine Planner</h1>
+    <div class="container">
+        <form id="medicine-form">
+            <div class="form-group">
+                <label for="medicine-name">Medicine Name</label>
+                <input type="text" id="medicine-name" placeholder="Enter medicine name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="doses">Number of Doses</label>
+                <input type="number" id="doses" placeholder="Enter number of doses" required>
+            </div>
+
+            <div id="time-inputs"></div>
+
+            <button type="button" class="btn" id="add-medicine">Add Medicine</button>
+        </form>
+
+        <div class="medicine-list" id="medicine-list"></div>
+    </div>
+
+    <script>
+        const medicineForm = document.getElementById('medicine-form');
+        const dosesInput = document.getElementById('doses');
+        const timeInputsContainer = document.getElementById('time-inputs');
+        const medicineList = document.getElementById('medicine-list');
+        const addMedicineBtn = document.getElementById('add-medicine');
+
+        dosesInput.addEventListener('input', () => {
+            const numberOfDoses = parseInt(dosesInput.value);
+            timeInputsContainer.innerHTML = '';
+
+            if (numberOfDoses > 0) {
+                for (let i = 1; i <= numberOfDoses; i++) {
+                    const inputGroup = document.createElement('div');
+                    inputGroup.className = 'form-group';
+
+                    const label = document.createElement('label');
+                    label.textContent = `Time for Dose ${i}`;
+
+                    const timeInput = document.createElement('input');
+                    timeInput.type = 'time';
+                    timeInput.required = true;
+
+                    inputGroup.appendChild(label);
+                    inputGroup.appendChild(timeInput);
+                    timeInputsContainer.appendChild(inputGroup);
+                }
+            }
+        });
+
+        const convertTo12HourFormat = (time) => {
+            const [hours, minutes] = time.split(':').map(Number);
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const adjustedHours = hours % 12 || 12;
+            return `${adjustedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+        };
+
+        addMedicineBtn.addEventListener('click', () => {
+            const medicineName = document.getElementById('medicine-name').value;
+            const numberOfDoses = parseInt(dosesInput.value);
+            const timeInputs = timeInputsContainer.querySelectorAll('input[type="time"]');
+
+            if (!medicineName || numberOfDoses <= 0 || timeInputs.length !== numberOfDoses) {
+                alert('Please fill in all the fields correctly.');
+                return;
+            }
+
+            const medicineItem = document.createElement('div');
+            medicineItem.className = 'medicine-item';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = `Medicine: ${medicineName}`;
+            medicineItem.appendChild(nameSpan);
+
+            const dosesSpan = document.createElement('span');
+            dosesSpan.textContent = `Doses: ${numberOfDoses}`;
+            medicineItem.appendChild(dosesSpan);
+
+            timeInputs.forEach((input, index) => {
+                const timeSpan = document.createElement('span');
+                timeSpan.textContent = `Dose ${index + 1} Time: ${convertTo12HourFormat(input.value)}`;
+                medicineItem.appendChild(timeSpan);
+            });
+
+            medicineList.appendChild(medicineItem);
+
+            medicineForm.reset();
+            timeInputsContainer.innerHTML = '';
+        });
+    </script>
+</body>
+
+</html>
