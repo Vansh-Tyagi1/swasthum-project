@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Skin Allergy Analyzer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #2c2c3c);
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      animation: fadeIn 1s ease-out;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #00ffff;
+      margin-bottom: 20px;
+    }
+
+    input[type="file"],
+    button {
+      background-color: #00ffff;
+      border: none;
+      color: #1e1e2f;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+    }
+
+    input[type="file"]::-webkit-file-upload-button {
+      background: #00ffff;
+      border: none;
+      color: #1e1e2f;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover,
+    input[type="file"]:hover::-webkit-file-upload-button {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    video, canvas {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    #result {
+      margin-top: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Skin Allergy Analyzer</h1>
+    <input type="file" id="imageUpload" accept="image/*" />
+    <button onclick="openCamera()">Capture</button>
+    <video id="camera" autoplay></video>
+    <canvas id="snapshot" style="display: none;"></canvas>
+    <button onclick="predict()">Predict</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    let imageBlob = null;
+
+    function openCamera() {
+      const video = document.getElementById('camera');
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+        });
+    }
+
+    document.getElementById("imageUpload").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        imageBlob = dataURLtoBlob(reader.result);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function predict() {
+      const canvas = document.getElementById('snapshot');
+      const video = document.getElementById('camera');
+      if (video.srcObject) {
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0);
+        canvas.toBlob(blob => sendImage(blob), 'image/jpeg');
+      } else if (imageBlob) {
+        sendImage(imageBlob);
+      } else {
+        alert("Please upload or capture an image.");
+      }
+    }
+
+    function sendImage(blob) {
+      const formData = new FormData();
+      formData.append('image', blob);
+
+      fetch('/predict', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("result").innerHTML = `
+          <h2>Prediction: ${data.label}</h2>
+          <p><strong>Symptoms:</strong> ${data.symptoms}</p>
+          <p><strong>Precautions:</strong> ${data.precautions}</p>
+          <p><strong>Medicines:</strong> ${data.medicines}</p>
+          <p><strong>Doctor's Advice:</strong> ${data.consultation}</p>
+        `;
+      });
+    }
+
+    function dataURLtoBlob(dataurl) {
+      const arr = dataurl.split(',');
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while(n--){
+          u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new Blob([u8arr], {type:mime});
+    }
+  </script>
+</body>
+</html>

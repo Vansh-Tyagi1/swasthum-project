@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify
 import tensorflow as tf
 import numpy as np
 from PIL import Image
@@ -83,7 +83,7 @@ info = {
 
 @app.route('/')
 def home():
-    return send_file('index.html')  # Serve index.html from the same folder
+    return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -103,6 +103,7 @@ def predict():
     label = labels[prediction].strip()
     clean_label = label.lower()
 
+
     print(f"Predicted index: {prediction}, Label: {label}")
 
     result = info.get(clean_label, {
@@ -116,3 +117,5 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+

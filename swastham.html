@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWASTHAM - Empowering Health</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="new.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <style>
+    /* Optional CSS to make the language dropdown smaller */
+    .goog-te-gadget {
+      font-size: 12px !important;
+    }
+    .goog-te-combo {
+      padding: 4px 6px;
+      font-size: 12px;
+      border-radius: 4px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,hi,gu,bn,ta,te,ml,kn,mr,pa,ur', // Add or remove languages as needed
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+
+<body>
+
+  <!-- Language Switcher Buttons -->
+  <div style="display: flex; justify-content: flex-end; padding: 10px 20px;">
+    <div id="google_translate_element" style="display: inline-block;"></div>
+  </div>
+    <header>
+        <div class="navbar">
+            <!-- Logo Section -->
+            <div class="logo-container">
+                <img src="logo.jpg" alt="SWASTHAM Logo" class="logo">
+                <h1>Empowering Healthcare</h1>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="http://127.0.0.1:8000/auth/login/">Login</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScCgGZsMqmTru1_egfoHhxZ3QhYxoSEQ0aemjKiDarZqbOZZQ/viewform?usp=dialog">Register as Doctor</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Language Selector Buttons -->
+      
+    </header>
+    
+
+   <div class="image"> <section class="banner" id="home">
+        <h1 style="color: rgb(255, 255, 255);">Welcome to SWASTHAM</h1>
+        <p style="color: white">Your trusted telemedicine platform</p>
+    
+        <!-- Search Bar Section
+        <div class="search-container">
+            <input type="text" placeholder="Enter your location" class="search-input">
+            <button class="search-button">Enter</button> <button class="microphone-button" id="micButton">
+                <i class="fa-solid fa-microphone"></i>
+            </button>
+        </div> -->
+    </section>
+</div>
+
+
+<div style="display: flex; justify-content: center; align-items: center; height: 30vh; flex-direction: column;">
+    <u><h1 style="font-size: 40px; text-align: center;">Our Services</h1></u>
+</div>
+
+<style>
+    .section {
+      padding: 40px 20px;
+    }
+  
+    .service-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 40px auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      background: #fff;
+    }
+  
+    .service-item img {
+      width: 200px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  
+    .service-text {
+      max-width: 500px;
+    }
+  
+    .service-text h3 {
+      margin-bottom: 10px;
+    }
+  
+    .service-text p {
+      margin-bottom: 15px;
+    }
+  
+    .audio-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+  
+  <section class="section">
+    <div class="service-item">
+      <img src="9.jpg" alt="Doctor Consultation">
+      <div class="service-text">
+        <a href="doctor.html" class="service-link">
+          <h3>Doctor Consultations</h3>
+          <p>Connect with certified medical professionals for expert diagnosis and personalized treatment plans.</p>
+        </a>
+        <button class="audio-button" onclick="playAudio()">
+          <img src="spk.jpg" alt="Play Audio" style="width: 24px; height: 24px;">
+        </button>
+        <audio id="consultationAudio">
+          <source src="HINDI doctor.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  
+    <div class="service-item">
+      <img src="skin1.jpg" alt="Skin Allergy Analyzer">
+      <div class="service-text">
+        <a href="http://127.0.0.1:5502/skin-allergy-web/templates/index.html" class="service-link">
+          <h3>Skin Allergy Analyzer</h3>
+          <p>Analyze skin conditions instantly by uploading or capturing images. Get medical insights, precautions, and guidance.</p>
+        </a>
+        <button class="audio-button" onclick="playSkinAudio()">
+          <img src="spk.jpg" alt="Play Audio" style="width: 24px; height: 24px;">
+        </button>
+        <audio id="skinAudio">
+          <source src="skin.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  
+    <div class="service-item">
+      <img src="5.jpeg" alt="Lab Testing">
+      <div class="service-text">
+        <a href="test.html" class="service-link">
+          <h3>Lab Testing</h3>
+          <p>Get your tests done at home and receive the results online, ensuring privacy and convenience.</p>
+        </a>
+        <button class="audio-button" onclick="playTestAudio()">
+          <img src="spk.jpg" alt="Play Audio" style="width: 24px; height: 24px;">
+        </button>
+        <audio id="testAudio">
+          <source src="HINDI LAB.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  
+    <div class="service-item">
+      <img src="ai.jpg" alt="AI Health Insights">
+      <div class="service-text">
+        <a href="chat.html" class="service-link">
+          <h3>AI Health Insights</h3>
+          <p>Leverage AI-powered diagnostics to gain insights into your health and well-being.</p>
+        </a>
+        <button class="audio-button" onclick="playAIHealthAudio()">
+          <img src="spk.jpg" alt="Play Audio" style="width: 24px; height: 24px;">
+        </button>
+        <audio id="aiHealthAudio">
+          <source src="HINDI AI.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  
+    <div class="service-item">
+      <img src="medicine.jpg" alt="Book Your Medicine">
+      <div class="service-text">
+        <a href="indexcart.html" class="service-link">
+          <h3>Book Your Medicine</h3>
+          <p>Order your medicines online with ease and have them delivered to your doorstep promptly.</p>
+        </a>
+        <button class="audio-button" onclick="playMedicineAudio()">
+          <img src="spk.jpg" alt="Play Audio" style="width: 24px; height: 24px;">
+        </button>
+        <audio id="medicineAudio">
+          <source src="MEDICINE HINDI.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  
+    <div class="service-item">
+      <img src="diet.jpg" alt="Personalized Diet Plan">
+      <div class="service-text">
+        <a href="http://127.0.0.1:8080/tdee" class="service-link">
+          <h3>Get Your Personalized Diet Plan</h3>
+          <p>Receive a customized diet plan tailored to your health needs and goals, designed by nutrition experts.</p>
+        </a>
+        <button class="audio-button" onclick="playDietAudio()">
+          <img src="spk.jpg" alt="Play Audio" style="width: 24px; height: 24px;">
+        </button>
+        <audio id="dietAudio">
+          <source src="HINDI DIET.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  
+    <div class="service-item">
+      <img src="planner.jpg" alt="Medicine Planner">
+      <div class="service-text">
+        <a href="plannner.html" class="service-link">
+          <h3>Medicine Planner</h3>
+          <p>Plan your medicine doses and reminders to ensure you never miss a dose again.</p>
+        </a>
+        <button class="audio-button" onclick="playPlannerAudio()">
+          <img src="spk.jpg" alt="Play Audio" style="width: 24px; height: 24px;">
+        </button>
+        <audio id="plannerAudio">
+          <source src="planner.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    function playAudio() {
+      document.getElementById('consultationAudio').play();
+    }
+  
+    function playSkinAudio() {
+      document.getElementById('skinAudio').play();
+    }
+  
+    function playTestAudio() {
+      document.getElementById('testAudio').play();
+    }
+  
+    function playAIHealthAudio() {
+      document.getElementById('aiHealthAudio').play();
+    }
+  
+    function playMedicineAudio() {
+      document.getElementById('medicineAudio').play();
+    }
+  
+    function playDietAudio() {
+      document.getElementById('dietAudio').play();
+    }
+  
+    function playPlannerAudio() {
+      document.getElementById('plannerAudio').play();
+    }
+  </script>
+  
+</section>
+    <div id="doctors">
+        <div class="head" >
+            <h1 id="doctor">Our Doctor's</h1>
+        </div>
+        <div class="doctors" >
+            <div class="team">
+                <img src="d1.jpg" alt="">
+                <img src="d2.jpg" alt="">
+                <img src="d3.jpg" alt="">
+            </div>
+            <div class="team">
+                <img src="d4.jpg" alt="">
+                <img src="d5.jpg" alt="">
+                <img src="d6.jpg" alt="">
+            </div>
+            <div class="team">
+                <img src="d7.jpg" alt="">
+                <img src="d2.jpg" alt="">
+                <img src="d9.jpg" alt="">
+            </div>
+
+        </div>
+    </div>
+
+    <div id="blog">
+        <div class="head">
+            <h1 id="doctor">Read Blog</h1>
+        </div>
+        <div class="blogs">
+            <div class="blogCard">
+                <img src="man.jpg" alt="" style="height: 300px; width: 260px;" >
+                <h4>Ways to Manage Your Mental Health While Working Remotely</h4>
+                <a href="https://www.ibm.com/blogs/jobs/6-ways-to-manage-your-mental-health-while-working-remotely/">Read More</a>
+            </div>
+            <div class="blogCard">
+                <img src="orange.jpg" alt="" style="height: 300px; width: 260px;">
+                <h4>Foods to Boost Your Immune System</h4>
+                <a href="https://www.brownhealth.org/be-well/foods-boost-your-immune-system">Read More</a>
+            </div>
+            <div class="blogCard">
+                <img src="hairfall.jpg" alt="" style="height: 300px; width: 260px;">
+                <h4>How Reduce Heavy Hair Fall Fast</h4>
+                <a href="https://www.apollohospitals.com/health-library/how-reduce-heavy-hair-fall-fast/">Read More</a>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="about" id="about">
+    <div class="footer">
+        <div class="text">
+            <h2>About</h2>
+            <p> SWASTHAM is a telemedicine <br>platform 
+                 committed to bridging <br>
+                  the gap between healthcare  <br>providers and patients.</p>
+            
+
+        </div>
+        <div class="text">
+            <h2>Care</h2>
+            <p>Facility</p>
+            <p>Reviews</p>
+            <p>Support</p>
+            <p>Staff</p>
+
+        </div>
+        <div class="text">
+            <h2>Address</h2>
+            <p>JK Hills</p>
+            <p>Galaxy Park</p>
+            <p>220-9990</p>
+            <p>maps on</p>
+
+        </div>
+        <div class="text">
+            <h2>Connects with Us</h2>
+            <p>LinkedIn</p>
+            <p>YouTube</p>
+            <p>Facebook</p>
+            <p>Instagram</p>
+
+        </div>
+    </div>
+</div> </section>
+<script src="script22.js"></script>
+<script src="script.js"></script>
+
+
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need support, feel free to reach out to us:</p>
+        <ul>
+            <li>Email: support@swastham.com</li>
+            <li >Phone: +1-800-123-4567</li>
+            <li>Address: 123 Health Avenue, Rural City, Country</li>
+        </ul>
+    </section>
+  
+    <footer>
+        <p>&copy; 2024 SWASTHAM. All rights reserved.</p>
+    </footer>
+</body>
+</html>
